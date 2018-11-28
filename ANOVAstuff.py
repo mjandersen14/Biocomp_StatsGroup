@@ -30,3 +30,10 @@ antibiotics=pd.read_csv("antibiotics.csv", header=0, sep=",")
 #graphing
 
 ggplot(antibiotics, aes(x="trt",y="growth"))+geom_jitter()
+
+#running ANOVA
+
+ANOVA1=ols('growth ~ C(trt)', data=antibiotics).fit()
+ANOVA1.summary()
+ANOVA_table=sm.stats.anova_lm(ANOVA1, typ=2)
+ANOVA_table
