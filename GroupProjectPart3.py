@@ -15,7 +15,30 @@ from plotnine import *
 
 
 #Create random dataset with 24 observations of y
+#random data set 
+N=24
+x=numpy.random.uniform(0,100,size=N)
+#0.4 is the slope of the line and 10 is the y intercept 
+y=0.4*x+10
+# add some "noise" to y and put the variables in a dataframe, *3 will determin how tight of a fit we will have
+#basically we are taking the y values that would make a perfect fit and added a random number to it then multiplied that by 3 to get more variance  
+y=y+numpy.random.randn(N)*3
+# Convert the data into a Pandas DataFrame to use the formulas framework in statsmodels
+df=pd.DataFrame({'x':x,'y':y})
+# plot our observations
+ggplot(df,aes(x='x',y='y'))+geom_point()+theme_classic()
 
+# Fit the model
+model = ols("y ~ x", df).fit()
+
+# Print the summary
+print(model.summary())
+
+# Peform analysis of variance on fitted linear model
+anova_results = anova_lm(model)
+
+print('\nANOVA results')
+print(anova_results)
 
 sigma_list[1,2,4,6,8,12,16,24]
 
@@ -58,19 +81,3 @@ B[1]=0.4 #slope
 
 #eight level ANOVA w/ 3 times each level
 
-#How to do ANOVA
-# Convert the data into a Pandas DataFrame to use the formulas framework
-# in statsmodels
-data = pandas.DataFrame({'x': x, 'y': y})
-
-# Fit the model
-model = ols("y ~ x", data).fit()
-
-# Print the summary
-print(model.summary())
-
-# Peform analysis of variance on fitted linear model
-anova_results = anova_lm(model)
-
-print('\nANOVA results')
-print(anova_results)
