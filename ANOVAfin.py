@@ -9,12 +9,9 @@ Created on Mon Nov 26 10:41:28 2018
 ##import programs
 
 import pandas as pd
-
-
 import statsmodels
 import statsmodels.api as sm
 from statsmodels.formula.api import ols
-
 from plotnine import *
 
 #importing data
