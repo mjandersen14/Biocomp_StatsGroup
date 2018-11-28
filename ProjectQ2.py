@@ -43,6 +43,17 @@ ggplot(anti,aes(x="trt", y="growth"))+geom_point()+theme_classic()
 
 
 
+#random data set 
+N=25
+x=numpy.random.uniform(0,100,size=N)
+#0.4 is the slope of the line and 10 is the y intercept 
+y=0.4*x+10
+# add some "noise" to y and put the variables in a dataframe, *3 will determin how tight of a fit we will have
+#basicly we are taking the y values that would make a perfect fit and added a random number to it then multiplied that by 3 to get more varrience  
+y=y+numpy.random.randn(N)*3
+df=pd.DataFrame({'x':x,'y':y})
+# plot our observations
+ggplot(df,aes(x='x',y='y'))+geom_point()+theme_classic()
 
 
 
