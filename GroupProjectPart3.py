@@ -57,3 +57,20 @@ B[1]=0.4 #slope
 #four level ANOVA w/ 6 times each level
 
 #eight level ANOVA w/ 3 times each level
+
+#How to do ANOVA
+# Convert the data into a Pandas DataFrame to use the formulas framework
+# in statsmodels
+data = pandas.DataFrame({'x': x, 'y': y})
+
+# Fit the model
+model = ols("y ~ x", data).fit()
+
+# Print the summary
+print(model.summary())
+
+# Peform analysis of variance on fitted linear model
+anova_results = anova_lm(model)
+
+print('\nANOVA results')
+print(anova_results)
