@@ -27,13 +27,18 @@ y=y+numpy.random.randn(N)*3
 df=pd.DataFrame({'x':x,'y':y})
 # plot our observations
 ggplot(df,aes(x='x',y='y'))+geom_point()+theme_classic()
-
-
-
-Data1=pd.DataFrame({'x':x,'y':y})
-
+    
 
 sigma_list[1,2,4,6,8,12,16,24]
+
+def NullMod(p,obs):
+    B0=p[0]
+    B1=p[1]
+    sigma=p[2]
+
+    expected=B0
+    nll=-1*norm(expected,sigma).logpdf(obs.y).sum()
+    return nll
 
 def RegMod(p,obs):
     B0=p[0]
@@ -41,9 +46,12 @@ def RegMod(p,obs):
     sigma=p[2]
 
     expected=B0+B1*obs.x
-    nll=-1*norm(expected,sigma).logpdf(obs.y).sum()
-    return nll
+    Reg=-1*norm(expected,sigma).logpdf(obs.y).sum()
+    return Reg
 
+for n in range(0,10):
+    
+    
 for n in sigma_list:
     do
     RegressionGuess=numpy.array([10,0.4,n])
@@ -78,3 +86,7 @@ print(ANOVA_results)
 
 #eight level ANOVA w/ 3 times each level
 
+
+
+#either make 5 different for loops or put loop as one of the arguments called in definition function
+#need 5 diff def functions (null, regression, 2/4/8 level ANOVA)
