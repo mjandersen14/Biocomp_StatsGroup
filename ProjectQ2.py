@@ -20,22 +20,45 @@ sugar=pd.read_csv('sugar.csv', header=0, sep="," )
 ggplot(sugar,aes(x="sugar", y="growth"))+geom_point()+theme_classic()
 
 #create a liklihood test 
-def nllike(p,obs):
+def regression(p,obs):
     B0=p[0]
     B1=p[1]
     sigma=p[2]
     expected=B0+B1*obs.sugar
-    nll=-1*norm(expected,sigma).logpdf(obs.growth).sum()
-    return nll
-### estimate parameters by minimizing the negative log likelihood
+    reg=-1*norm(expected,sigma).logpdf(obs.growth).sum()
+    return reg 
+
 initialGuess=numpy.array([1,1,1])
-fit=minimize(nllike,initialGuess,method="Nelder-Mead",options={'disp': True},args=sugar)
+fit=minimize(regression,initialGuess,method="Nelder-Mead",options={'disp': True},args=sugar)
+
+def null(p,obs):
+    B0=p[0]
+    B1=p[1]
+    sigma=p[2]
+    expected=B0
+    nll=-1*norm(expected,sigma).logpdf(obs.growth).sum()
+    return nll 
+
+initialGuess=numpy.array([1,1,1])
+fitnull=minimize(null,initialGuess,method="Nelder-Mead",options={'disp': True},args=sugar)
+
 # fit is a variable that contains an OptimizeResult object
 # attribute 'x' is a list of the most likely parameter values
 print(fit)
 
+from scipy import stats 
+
+teststat=2*(fitnull.fun-fit.fun)
+df=len(fit.x)-len(fitnull.x)
+pval=1-stats.chi2.cdf(teststat,df) #this didn't work 
+print (pval)
 
 
+
+
+#find a p-value 
+#sentence about plot 
+#do we care about the effect of sugar on growth 
 
 
 
