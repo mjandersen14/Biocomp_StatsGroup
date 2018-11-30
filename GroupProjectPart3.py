@@ -5,9 +5,9 @@ Created on Tue Nov 27 15:04:55 2018
 @author: Alicia
 """
 
-import numpy as np
+import numpy
 import pandas as pd
-import statsmodels
+import statsmodels.api as sm
 from statsmodels.formula.api import ols
 #Analysis of Variance (ANOVA) for linear models
 from statsmodels.stats.anova import anova_lm
@@ -28,6 +28,11 @@ df=pd.DataFrame({'x':x,'y':y})
 # plot our observations
 ggplot(df,aes(x='x',y='y'))+geom_point()+theme_classic()
 
+
+
+Data1=pd.DataFrame({'x':x,'y':y})
+
+
 sigma_list[1,2,4,6,8,12,16,24]
 
 def RegMod(p,obs):
@@ -41,33 +46,31 @@ def RegMod(p,obs):
 
 for n in sigma_list:
     do
-    RegressionGuess$n=numpy.array([10,0.4,"$n"])
+    RegressionGuess=numpy.array([10,0.4,n])
 fitRegression=minimize(RegMod,RegressionGuess,method="Nelder-Mead",args=df)
-
-teststat=2*(Regression.fun-fitQuadratic.fun)
-data=len(fitQuadratic.x)-len(fitLinear.x)
-1-chi2.cdf(teststat,data)
+    return fitRegression
 
 def ANOVAmod(p,obs):
 
+
 # Fit the model
-model = ols("y ~ x", df).fit()
+#model = ols("y ~ x", df).fit()
 
-# Print the summary
+
+#running ANOVA
+
+#Fit the model
+model=ols('', data=#insert dataframe here).fit()
+model.summary()
 print(model.summary())
-
-# Peform analysis of variance on fitted linear model
-anova_results = anova_lm(model)
-
+#Perform ANOVA on linear model
+ANOVA_results=sm.stats.anova_lm(model, typ=2)
 print('\nANOVA results')
-print(anova_results)
+print(ANOVA_results)
 
-# Plot the data
-plt.figure(figsize=(5, 4))
-plt.plot(x, y, 'o')
 
-B[0]=10 #y-int
-B[1]=0.4 #slope
+#B[0]=10 #y-int
+#B[1]=0.4 #slope
 #two level ANOVA w/ 12 times each level
 #sigma=1,2,4,6,8,12,16,24
 
