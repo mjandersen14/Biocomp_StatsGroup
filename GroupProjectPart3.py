@@ -33,9 +33,7 @@ sigma_list[1,2,4,6,8,12,16,24]
 
 def NullMod(p,obs):
     B0=p[0]
-    B1=p[1]
-    sigma=p[2]
-
+    sigma=p[1]
     expected=B0
     nll=-1*norm(expected,sigma).logpdf(obs.y).sum()
     return nll
@@ -49,17 +47,38 @@ def RegMod(p,obs):
     Reg=-1*norm(expected,sigma).logpdf(obs.y).sum()
     return Reg
 
-for n in range(0,10):
+def anova2Mod(p,obs):
+    B0=p[0]
+    
+def anova4Mod(p,obs):
+    
+def anova8Mod(p,obs):
     
     
 for n in sigma_list:
-    do
-    RegressionGuess=numpy.array([10,0.4,n])
-fitRegression=minimize(RegMod,RegressionGuess,method="Nelder-Mead",args=df)
+    NullGuess.n=numpy.array([10,0.4,n])
+    fitNull=minimize(NullMod,NullGuess,method="Nelder-Mead",args=df)
+    return fitNull
+
+for n in sigma_list:
+    RegressionGuess.n=numpy.array([10,0.4,n])
+    fitRegression=minimize(RegMod,RegressionGuess,method="Nelder-Mead",args=df)
     return fitRegression
 
-def ANOVAmod(p,obs):
+for n in sigma_list:
+    anova2Guess.n=numpy.array([10,0.4,n])
+    fitRegression=minimize(anova2Mod,anova2Guess,method="Nelder-Mead",args=df)
+    return fitAnova2
 
+for n in sigma_list:
+    anova4Guess.n=numpy.array([10,0.4,n])
+    fitRegression=minimize(anova4Mod,anova4Guess,method="Nelder-Mead",args=df)
+    return fitAnova4
+
+for n in sigma_list:
+    anova8Guess.n=numpy.array([10,0.4,n])
+    fitanova8=minimize(anova8Mod,anova8Guess,method="Nelder-Mead",args=df)
+    return fitAnova8
 
 # Fit the model
 #model = ols("y ~ x", df).fit()
@@ -68,7 +87,7 @@ def ANOVAmod(p,obs):
 #running ANOVA
 
 #Fit the model
-model=ols('', data=#insert dataframe here).fit()
+model=ols('', data=df).fit()
 model.summary()
 print(model.summary())
 #Perform ANOVA on linear model
