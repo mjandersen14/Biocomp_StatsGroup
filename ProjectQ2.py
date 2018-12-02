@@ -52,7 +52,7 @@ df=len(fit.x)-len(fitnull.x)
 pval=1-stats.chi2.cdf(teststat,df)  
 print (pval)
 
-
+print ()
 #sentence about plot do we need a regression line on our plot? 
 #because our p-value is low we can reject the null hypothesis. This tells us 
 #we do care about the effect of sugar on growth
