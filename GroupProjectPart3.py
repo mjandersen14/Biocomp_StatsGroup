@@ -4,6 +4,9 @@ Created on Tue Nov 27 15:04:55 2018
 
 @author: Alicia
 """
+#Questions:
+#How to make anova function definition - equation
+#How to make anova datasets where we have groups for each level
 
 import numpy
 import pandas as pd
@@ -52,28 +55,34 @@ def anova4Mod(p,obs):
     
 def anova8Mod(p,obs):
     
-    
-for n in sigma_list:
-    NullGuess=numpy.array([10,n])
-    fitNull.n=minimize(NullMod,NullGuess,method="Nelder-Mead",args=df)
+for i in range(0,10): 
+    for n in sigma_list:
+        NullGuess=numpy.array([10,n])
+        fitNull_n_i=minimize(NullMod,NullGuess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
     RegressionGuess=numpy.array([10,0.4,n])
-    fitRegression.n=minimize(RegMod,RegressionGuess,method="Nelder-Mead",args=df)
+    fitRegression_n=minimize(RegMod,RegressionGuess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
     anova2Guess=numpy.array([10,0.4,n])
-    fitanova2.n=minimize(anova2Mod,anova2Guess,method="Nelder-Mead",args=df)
+    fitanova2_n=minimize(anova2Mod,anova2Guess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
     anova4Guess=numpy.array([10,0.4,n])
-    fitanova4.n=minimize(anova4Mod,anova4Guess,method="Nelder-Mead",args=df)
+    fitanova4_n=minimize(anova4Mod,anova4Guess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
     anova8Guess=numpy.array([10,0.4,n])
-    fitanova8.n=minimize(anova8Mod,anova8Guess,method="Nelder-Mead",args=df)
+    fitanova8_n=minimize(anova8Mod,anova8Guess,method="Nelder-Mead",args=df)
 
+for i in range(0,10):
 
+    for n in sigma_list:
+        teststat=2*(fitNull_n_i.fun-fitRegression_n.fun)
+        data=len(fitRegression_n.x)-len(fitNull_n.x)
+        pval_n=1-chi2.cdf(teststat,data)
+    
 # Fit the model
 #model = ols("y ~ x", df).fit()
 
