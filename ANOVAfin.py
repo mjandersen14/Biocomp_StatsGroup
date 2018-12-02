@@ -9,19 +9,18 @@ Created on Mon Nov 26 10:41:28 2018
 ##import programs
 
 import pandas as pd
-import statsmodels
+from scipy import stats
 import statsmodels.api as sm
 from statsmodels.formula.api import ols
 from plotnine import *
 
 #importing data
 
-sugar=pd.read_csv("sugar.csv", header=0, sep=",")
 antibiotics=pd.read_csv("antibiotics.csv", header=0, sep=",")
 
 #visualizing data
 
-ggplot(antibiotics, aes(x="trt",y="growth"))+geom_jitter()
+ggplot(antibiotics, aes(x="trt",y="growth"))+geom_boxplot()
 
 #running ANOVA
 
@@ -30,3 +29,4 @@ ANOVA1.summary()
 ANOVA_table=sm.stats.anova_lm(ANOVA1, typ=2)
 ANOVA_table
 
+F, p = stats.f_oneway(antibiotics['control'], antibiotics['ab1'], antibiotics['ab2'],antibiotics['ab3'])
