@@ -7,10 +7,8 @@ Created on Tue Nov 27 15:04:55 2018
 
 import numpy
 import pandas as pd
-import statsmodels.api as sm
-from statsmodels.formula.api import ols
-#Analysis of Variance (ANOVA) for linear models
-from statsmodels.stats.anova import anova_lm
+import scipy
+from scipy import stats
 from plotnine import *
 
 
@@ -25,10 +23,10 @@ y=0.4*x+10
 y=y+numpy.random.randn(N)*3
 # Convert the data into a Pandas DataFrame to use the formulas framework in statsmodels
 df=pd.DataFrame({'x':x,'y':y})
+df.groupby(['])
 # plot our observations
 ggplot(df,aes(x='x',y='y'))+geom_point()+theme_classic()
     
-
 sigma_list[1,2,4,6,8,12,16,24]
 
 def NullMod(p,obs):
@@ -56,29 +54,25 @@ def anova8Mod(p,obs):
     
     
 for n in sigma_list:
-    NullGuess.n=numpy.array([10,0.4,n])
-    fitNull=minimize(NullMod,NullGuess,method="Nelder-Mead",args=df)
-    return fitNull
+    NullGuess=numpy.array([10,n])
+    fitNull.n=minimize(NullMod,NullGuess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
-    RegressionGuess.n=numpy.array([10,0.4,n])
-    fitRegression=minimize(RegMod,RegressionGuess,method="Nelder-Mead",args=df)
-    return fitRegression
+    RegressionGuess=numpy.array([10,0.4,n])
+    fitRegression.n=minimize(RegMod,RegressionGuess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
-    anova2Guess.n=numpy.array([10,0.4,n])
-    fitRegression=minimize(anova2Mod,anova2Guess,method="Nelder-Mead",args=df)
-    return fitAnova2
+    anova2Guess=numpy.array([10,0.4,n])
+    fitanova2.n=minimize(anova2Mod,anova2Guess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
-    anova4Guess.n=numpy.array([10,0.4,n])
-    fitRegression=minimize(anova4Mod,anova4Guess,method="Nelder-Mead",args=df)
-    return fitAnova4
+    anova4Guess=numpy.array([10,0.4,n])
+    fitanova4.n=minimize(anova4Mod,anova4Guess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
-    anova8Guess.n=numpy.array([10,0.4,n])
-    fitanova8=minimize(anova8Mod,anova8Guess,method="Nelder-Mead",args=df)
-    return fitAnova8
+    anova8Guess=numpy.array([10,0.4,n])
+    fitanova8.n=minimize(anova8Mod,anova8Guess,method="Nelder-Mead",args=df)
+
 
 # Fit the model
 #model = ols("y ~ x", df).fit()
@@ -94,6 +88,10 @@ print(model.summary())
 ANOVA_results=sm.stats.anova_lm(model, typ=2)
 print('\nANOVA results')
 print(ANOVA_results)
+
+
+F, p = stats.f_oneway(d_df[], d_df[])
+
 
 
 #B[0]=10 #y-int
