@@ -19,7 +19,7 @@ sugar=pd.read_csv('sugar.csv', header=0, sep="," )
 #create graph of data 
 ggplot(sugar,aes(x="sugar", y="growth"))+geom_point()+theme_classic()
 
-#cregression  
+#regression  
 def regression(p,obs):
     B0=p[0]
     B1=p[1]
@@ -54,7 +54,8 @@ print (pval)
 
 
 #sentence about plot do we need a regression line on our plot? 
-#do we care about the effect of sugar on growth ... answer 
+#because our p-value is low we can reject the null hypothesis. This tells us 
+#we do care about the effect of sugar on growth
 
 
 
