@@ -29,4 +29,3 @@ ANOVA1.summary()
 ANOVA_table=sm.stats.anova_lm(ANOVA1, typ=2)
 ANOVA_table
 
-F, p = stats.f_oneway(antibiotics['control'], antibiotics['ab1'], antibiotics['ab2'],antibiotics['ab3'])
