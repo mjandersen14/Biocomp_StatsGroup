@@ -12,6 +12,7 @@ import pandas as pd
 from plotnine import *
 from scipy.optimize import minimize
 from scipy.stats import norm
+from scipy import stats 
 
 #Import sugar.txt
 sugar=pd.read_csv('sugar.csv', header=0, sep="," )
