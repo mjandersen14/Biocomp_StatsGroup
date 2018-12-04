@@ -33,11 +33,37 @@ def null(p,obs):
     nll=-1*norm(expected,sigma).logpdf(obs.y).sum()
     return nll
 
-def ANOVA2:
+def anova2Mod(p,obs):
+    B0=p[0]
+    B1=p[1]
+    sigma=p[2]
+    expected=B0+B1*obs.x1
+    anova2=-1*norm(expected,sigma).logpdf(obs.y).sum()
+    return anova2
     
-def ANOVA4:
+def anova4Mod(p,obs):
+    B0=p[0]
+    B1=p[1]
+    B2=p[2]
+    B3=p[3]
+    sigma=p[4]
+    expected=B0+B1*obs.x1+B2*obs.x2+B3*obs.x3
+    anova4=-1*norm(expected,sigma).logpdf(obs.y).sum()
+    return anova4
     
-def ANOVA8:
+def anova8Mod(p,obs):
+    B0=p[0]
+    B1=p[1]
+    B2=p[2]
+    B3=p[3]
+    B4=p[4]
+    B5=p[5]
+    B6=p[6]
+    B7=p[7]
+    sigma=p[8]
+    expected=B0+B1*obs.x1+B2*obs.x2+B3*obs.x3+B4*obs.x4+B5*obs.x5+B6*obs.x6+B7*obs.x7
+    anova8=-1*norm(expected,sigma).logpdf(obs.y).sum()
+    return anova8
     
 def mean(data):
      return sum(data) / len(data)
@@ -86,13 +112,13 @@ for s in range (0,len(sigma_list)):
        #get into a format we can use 
        #get rid of the x axis variables
        
-       #run through ANOVA2
-       ANOVA2Guess=numpy.array([10,0.4,s])
-       fit2=minimize(regression,RegressionGuess,method="Nelder-Mead",args=df)
+       #get stats on anova 2 level
+       anova2Guess=numpy.array([10,0.4,1])
+       fitanova2=minimize(anova2Mod,anova2Guess,method="Nelder-Mead",args=df)
        
-       #compare ANOVA2 to null to get a p-value
-       teststat=2*(fitNull.fun-fit2.fun)
-       data=len(fit2.x)-len(fitNull.x)
+       #compare anova 2 level and null to get p-value
+       teststat=2*(fitNull.fun-fitanova2.fun)
+       data=len(fitanova2.x)-len(fitNull.x)
        pval2=1-stats.chi2.cdf(teststat,data)
        
        #add p-vals to list 
@@ -113,13 +139,13 @@ for s in range (0,len(sigma_list)):
        Anova6G1=sorted.tail(4)
        #now get in a format we can use  
        
-       #run through ANOVA4
-       ANOVA4Guess=numpy.array([10,0.4,10,10,s])
-       fit4=minimize(regression,RegressionGuess,method="Nelder-Mead",args=df)
+       #get stats on anova 4 level
+       anova4Guess=numpy.array([10,0.4,10,10,1])
+       fitanova4=minimize(anova4Mod,anova4Guess,method="Nelder-Mead",args=df)
        
-       #compare ANOVA4 to null to get p-value
-       teststat=2*(fitNull.fun-fit4.fun)
-       data=len(fit4.x)-len(fitNull.x)
+       #compare anova 4 level and null to get p-value
+       teststat=2*(fitNull.fun-fitanova4.fun)
+       data=len(fitanova4.x)-len(fitNull.x)
        pval4=1-stats.chi2.cdf(teststat,data)
        
        #add p-vals to list 
@@ -146,14 +172,13 @@ for s in range (0,len(sigma_list)):
        #get into a format we can use
        obs=the DataFrame
        
+       #get stats on anova 8 level
+       anova8Guess=numpy.array([10,0.4,10,10,10,10,10,10,1])
+       fitanova8=minimize(anova8Mod,anova8Guess,method="Nelder-Mead",args=df)
        
-       #run through ANOVA8
-       ANOVA8Guess=numpy.array([10,0.4,10,10,10,10,10,s])
-       fit8=minimize(regression,RegressionGuess,method="Nelder-Mead",args=df)
-       
-       #compare ANOVA8 to null to get a p-value
-       teststat=2*(fitNull.fun-fit8.fun)
-       data=len(fit8.x)-len(fitNull.x)
+       #compare anova 8 level and null to get p-value
+       teststat=2*(fitNull.fun-fitanova8.fun)
+       data=len(fitanova8.x)-len(fitNull.x)
        pval8=1-stats.chi2.cdf(teststat,data)
        
        #add p-vals to list 
@@ -163,7 +188,7 @@ for s in range (0,len(sigma_list)):
    summary [s,0]=mean(rPvals)
    summary [s,1]=mean(a2Pvals) 
    summary [s,2]=mean(a4Pvals)
-    summary [s,3]=mean(a8Pvals)
+   summary [s,3]=mean(a8Pvals)
 print (summary)
 
 #turn summary into dataframe 
