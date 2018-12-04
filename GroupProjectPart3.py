@@ -7,6 +7,8 @@ Created on Tue Nov 27 15:04:55 2018
 #Questions:
 #How to make anova function definition - equation
 #How to make anova datasets where we have groups for each level
+#How to make 10 different random datasets
+#Finding p-values
 
 import numpy
 import pandas as pd
@@ -43,22 +45,45 @@ def RegMod(p,obs):
     B0=p[0]
     B1=p[1]
     sigma=p[2]
-
-    expected=B0+B1*obs.x
+    expected=B0+B1*obs.x1
     Reg=-1*norm(expected,sigma).logpdf(obs.y).sum()
     return Reg
 
 def anova2Mod(p,obs):
     B0=p[0]
+    B1=p[1]
+    sigma=p[2]
+    expected=B0+B1*obs.x1
+    anova2=-1*norm(expected,sigma).logpdf(obs.y).sum()
+    return anova2
     
 def anova4Mod(p,obs):
+    B0=p[0]
+    B1=p[1]
+    B2=p[2]
+    B3=p[3]
+    sigma=p[4]
+    expected=B0+B1*obs.x1+B2*obs.x2+B3*obs.x3
+    anova4=-1*norm(expected,sigma).logpdf(obs.y).sum()
+    return anova4
     
 def anova8Mod(p,obs):
+    B0=p[0]
+    B1=p[1]
+    B2=p[2]
+    B3=p[3]
+    B4=p[4]
+    B5=p[5]
+    B6=p[6]
+    sigma=p[7]
+    expected=B0+B1*obs.x1+B2*obs.x2+B3*obs.x3+B4*obs.x4+B5*obs.x5+B6*obs.x6
+    anova8=-1*norm(expected,sigma).logpdf(obs.y).sum()
+    return anova8
     
 for i in range(0,10): 
     for n in sigma_list:
         NullGuess=numpy.array([10,n])
-        fitNull_n_i=minimize(NullMod,NullGuess,method="Nelder-Mead",args=df)
+        fitNull_'n'=minimize(NullMod,NullGuess,method="Nelder-Mead",args=df)
 
 for n in sigma_list:
     RegressionGuess=numpy.array([10,0.4,n])
