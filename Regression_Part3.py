@@ -33,6 +33,7 @@ def null(p,obs):
     nll=-1*norm(expected,sigma).logpdf(obs.y).sum()
     return nll
 
+#define function for 2-way ANOVA
 def anova2Mod(p,obs):
     B0=p[0]
     B1=p[1]
@@ -41,6 +42,7 @@ def anova2Mod(p,obs):
     anova2=-1*norm(expected,sigma).logpdf(obs.y).sum()
     return anova2
     
+#define function for 4-way ANOVA
 def anova4Mod(p,obs):
     B0=p[0]
     B1=p[1]
@@ -51,6 +53,7 @@ def anova4Mod(p,obs):
     anova4=-1*norm(expected,sigma).logpdf(obs.y).sum()
     return anova4
     
+#define function for 8-way ANOVA
 def anova8Mod(p,obs):
     B0=p[0]
     B1=p[1]
@@ -192,10 +195,11 @@ for s in range (0,len(sigma_list)):
 print (summary)
 
 #turn summary into dataframe 
+pd.summary(columns=['Sigma','Regression Pvals','2-way ANOVA Pvals','4-way ANOVA Pvals','8-way ANOVA Pvals']
+index=['1','2','4','6','8','12','16','24'])
 
 #mean of the p-vals at all sigmas? 
 #what do they tell us? 
-
 
 
 
