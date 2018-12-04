@@ -73,7 +73,7 @@ def mean(data):
 sigma_list=[1,2,4,6,8,12,16,24]
 d=0
 summary=numpy.zeros(shape=(8,4))
-s=0
+
 for s in range (0,len(sigma_list)):
    rPvals=[]
    a2Pvals=[]
