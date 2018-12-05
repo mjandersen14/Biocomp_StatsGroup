@@ -138,10 +138,8 @@ for s in range (0,len(sigma_list)):
        pval2=1-stats.chi2.cdf(teststat,data)
        
        #add p-vals to list 
-       a2Pvals.append(pval2l)
-       
-       #add df to dummyframe
        a2Pvals.append(pval2)
+       
        #split data into 4 groups
        A4f=A4.join(df)
        sorted=A4f.sort_values(by=['x'])
