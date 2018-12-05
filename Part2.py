@@ -20,7 +20,7 @@ sugar=pd.read_csv('sugar.csv', header=0, sep="," )
 #create graph of data 
 ggplot(sugar,aes(x="sugar", y="growth"))+geom_point()+theme_classic()
 
-#regression  
+#make a function for regression and null 
 def regression(p,obs):
     B0=p[0]
     B1=p[1]
@@ -29,16 +29,16 @@ def regression(p,obs):
     reg=-1*norm(expected,sigma).logpdf(obs.growth).sum()
     return reg 
 
-initialGuess=numpy.array([1,1,1])
-fit=minimize(regression,initialGuess,method="Nelder-Mead",options={'disp': True},args=sugar)
-
-#null 
 def null(p,obs):
     B0=p[0]
     sigma=p[1]
     expected=B0
     nll=-1*norm(expected,sigma).logpdf(obs.growth).sum()
     return nll 
+
+#optimize regression and null 
+initialGuess=numpy.array([1,1,1])
+fit=minimize(regression,initialGuess,method="Nelder-Mead",options={'disp': True},args=sugar)
 
 initialGuess=numpy.array([1,1])
 fitnull=minimize(null,initialGuess,method="Nelder-Mead",options={'disp': True},args=sugar)
@@ -53,7 +53,6 @@ df=len(fit.x)-len(fitnull.x)
 pval=1-stats.chi2.cdf(teststat,df)  
 print (pval)
 
-print ()
 #sentence about plot do we need a regression line on our plot? 
 #because our p-value is low we can reject the null hypothesis. This tells us 
 #we do care about the effect of sugar on growth
