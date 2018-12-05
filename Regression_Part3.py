@@ -95,7 +95,7 @@ for s in range (0,len(sigma_list)):
    a4Pvals=[]
    a8Pvals=[]
    for d in range (0,10):
-       #creates a random data set
+       #creates a random data set 
        N=24
        x=numpy.random.uniform(0,50,size=N)
        y=0.4*x+10
@@ -138,11 +138,12 @@ for s in range (0,len(sigma_list)):
        pval2=1-stats.chi2.cdf(teststat,data)
        
        #add p-vals to list 
-       a2Pvals.append(pval2)
+       a2Pvals.append(pval2l)
        
        #add df to dummyframe
-       A4f=A4.join(df)
+       a2Pvals.append(pval2)
        #split data into 4 groups
+       A4f=A4.join(df)
        sorted=A4f.sort_values(by=['x'])
        Anova4G1=sorted.tail(6)
        sorted=sorted[:-6]
@@ -187,7 +188,7 @@ for s in range (0,len(sigma_list)):
        sorted=sorted[:-3]
        Anova8G1=sorted.tail(3)
        #get into a format we can use
-       
+
        
        #get stats on anova 8 level
        anova8Guess=numpy.array([10,0.4,10,10,10,10,10,10,1])
