@@ -1,0 +1,8 @@
+Comments for Peer Review of R Stats Group (user fjhuizar):
+
+Coding looks good, seems reusable, and appears to run correctly for the students.
+There is some extra information that is not necessary for the project but seems helpful - ex: plotting histograms.
+Hard to give specific critiques given that we do not know R, but the code was explained to us well.
+Comparing the right things, proper number of simulations, getting results for all of the ANOVAs as well as the regression.
+All of the commenting is helpful in explaining each step of the code.
+

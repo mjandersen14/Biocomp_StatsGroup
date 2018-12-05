@@ -216,8 +216,7 @@ finalsum=pd.DataFrame(data=summary,
                   index=sigma,
                   columns=columns)
 print(finalsum)
-#mean of the p-vals at all sigmas? 
-#what do they tell us? 
+
 
 
 
