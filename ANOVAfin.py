@@ -23,9 +23,7 @@ anti=pd.read_csv("antibiotics.csv", header=0, sep=",")
 
 ggplot(anti, aes(x="trt",y="growth"))+geom_boxplot()
 
-#running ANOVA
-N=16
-y=.4*x+5
+
 # add some "noise" to y and put the variables in a dataframe
 y=y+np.random.randn(N)
 antifixNull=pd.DataFrame({"x":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
