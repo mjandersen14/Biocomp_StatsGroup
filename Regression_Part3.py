@@ -83,7 +83,7 @@ for s in range (0,len(sigma_list)):
    a4Pvals=[]
    a8Pvals=[]
    for d in range (0,10):
-       #creates a random data set
+       #creates a random data set its giving us negative numbers... 
        N=24
        x=numpy.random.uniform(0,50,size=N)
        y=0.4*x+10
@@ -110,8 +110,8 @@ for s in range (0,len(sigma_list)):
        
        #Split data into 2 groups
        sorted=df.sort_values(by=['x'])
-       Anova2G1=sorted.head(12)
-       Anova2G2=sorted.tail(12)
+       A2=pd.DataFrame({"x1":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1]})
+                 
        #get into a format we can use 
        #get rid of the x axis variables
        
@@ -129,17 +129,11 @@ for s in range (0,len(sigma_list)):
        
        
        #split data into 6 groups
-       Anova6G6=sorted.tail(4)
-       sorted=sorted[:-4]
-       Anova6G5=sorted.tail(4)
-       sorted=sorted[:-4]
-       Anova6G4=sorted.tail(4)
-       sorted=sorted[:-4]
-       Anova6G3=sorted.tail(4)
-       sorted=sorted[:-4]
-       Anova6G2=sorted.tail(4)
-       sorted=sorted[:-4]
-       Anova6G1=sorted.tail(4)
+       sorted=df.sort_values(by=['x'])
+       A4=pd.DataFrame({"x1":[0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+                      "x2":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0], 
+                      "x3":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1]})
+
        #now get in a format we can use  
        
        #get stats on anova 4 level
@@ -155,25 +149,17 @@ for s in range (0,len(sigma_list)):
        a4Pvals.append(pval4)
        
        
-       #split data into 8 groups 
+       #split data into 8 groups
        sorted=df.sort_values(by=['x'])
-       Anova8G8=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G7=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G6=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G5=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G4=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G3=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G2=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G1=sorted.tail(3)
+       A8=pd.DataFrame({"x1":[0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      "x2":[0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 
+                      "x3":[0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+                      "x4":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0],
+                      "x5":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+                      "x6":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0],
+                      "x7":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1]})
        #get into a format we can use
-       obs=the DataFrame
+       A8['y']=sorted[:,1]
        
        #get stats on anova 8 level
        anova8Guess=numpy.array([10,0.4,10,10,10,10,10,10,1])
