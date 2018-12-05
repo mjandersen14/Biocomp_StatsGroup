@@ -214,6 +214,7 @@ sigma=['1','2','4','6','8','12','16','24']
 finalsum=pd.DataFrame(data=summary,
                   index=sigma,
                   columns=columns)
+print(finalsum)
 #mean of the p-vals at all sigmas? 
 #what do they tell us? 
 
