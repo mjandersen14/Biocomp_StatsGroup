@@ -71,19 +71,31 @@ def anova8Mod(p,obs):
 def mean(data):
      return sum(data) / len(data)
     
-
-
+#necessary dataframes
 sigma_list=[1,2,4,6,8,12,16,24]
 d=0
+s=0
 summary=numpy.zeros(shape=(8,4))
+A2=pd.DataFrame({"x1":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1]})
+A4=pd.DataFrame({"x1":[0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+                      "x2":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0], 
+                      "x3":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1]})
+A8=pd.DataFrame({"x1":[0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                      "x2":[0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 
+                      "x3":[0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+                      "x4":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0],
+                      "x5":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+                      "x6":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0],
+                      "x7":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1]})
 
+#where the calculations happen
 for s in range (0,len(sigma_list)):
    rPvals=[]
    a2Pvals=[]
    a4Pvals=[]
    a8Pvals=[]
    for d in range (0,10):
-       #creates a random data set its giving us negative numbers... 
+       #creates a random data set 
        N=24
        x=numpy.random.uniform(0,50,size=N)
        y=0.4*x+10
@@ -107,17 +119,18 @@ for s in range (0,len(sigma_list)):
        #add p-vals to list 
        rPvals.append(regressionpval)
        
-       
+       #add df to dummyframe
+       A2f=A2.join(df)
        #Split data into 2 groups
-       sorted=df.sort_values(by=['x'])
-       A2=pd.DataFrame({"x1":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1]})
-                 
+       sorted=A2f.sort_values(by=['x'])
+       Anova2G1=sorted.head(12)
+       Anova2G2=sorted.tail(12)
        #get into a format we can use 
        #get rid of the x axis variables
        
        #get stats on anova 2 level
        anova2Guess=numpy.array([10,0.4,1])
-       fitanova2=minimize(anova2Mod,anova2Guess,method="Nelder-Mead",args=df)
+       fitanova2=minimize(anova2Mod,anova2Guess,method="Nelder-Mead",args=A2f)
        
        #compare anova 2 level and null to get p-value
        teststat=2*(fitNull.fun-fitanova2.fun)
@@ -127,18 +140,25 @@ for s in range (0,len(sigma_list)):
        #add p-vals to list 
        a2Pvals.append(pval2l)
        
+       #add df to dummyframe
+       a2Pvals.append(pval2)
+       #split data into 4 groups
+       A4f=A4.join(df)
+       sorted=A4f.sort_values(by=['x'])
+       Anova4G1=sorted.tail(6)
+       sorted=sorted[:-6]
+       Anova4G2=sorted.tail(6)
+       sorted=sorted[:-6]
+       Anova4G3=sorted.tail(6)
+       sorted=sorted[:-6]
+       Anova4G4=sorted.tail(6)
+       sorted=sorted[:-6]
        
-       #split data into 6 groups
-       sorted=df.sort_values(by=['x'])
-       A4=pd.DataFrame({"x1":[0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
-                      "x2":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0], 
-                      "x3":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1]})
-
        #now get in a format we can use  
        
        #get stats on anova 4 level
        anova4Guess=numpy.array([10,0.4,10,10,1])
-       fitanova4=minimize(anova4Mod,anova4Guess,method="Nelder-Mead",args=df)
+       fitanova4=minimize(anova4Mod,anova4Guess,method="Nelder-Mead",args=A4f)
        
        #compare anova 4 level and null to get p-value
        teststat=2*(fitNull.fun-fitanova4.fun)
@@ -148,22 +168,31 @@ for s in range (0,len(sigma_list)):
        #add p-vals to list 
        a4Pvals.append(pval4)
        
-       
-       #split data into 8 groups
-       sorted=df.sort_values(by=['x'])
-       A8=pd.DataFrame({"x1":[0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                      "x2":[0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 
-                      "x3":[0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
-                      "x4":[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0],
-                      "x5":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
-                      "x6":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0],
-                      "x7":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1]})
+       #add df to dummyframe
+       A8f=A8.join(df)
+       #split data into 8 groups 
+       sorted=A8f.sort_values(by=['x'])
+       Anova8G8=sorted.tail(3)
+       sorted=sorted[:-3]
+       Anova8G7=sorted.tail(3)
+       sorted=sorted[:-3]
+       Anova8G6=sorted.tail(3)
+       sorted=sorted[:-3]
+       Anova8G5=sorted.tail(3)
+       sorted=sorted[:-3]
+       Anova8G4=sorted.tail(3)
+       sorted=sorted[:-3]
+       Anova8G3=sorted.tail(3)
+       sorted=sorted[:-3]
+       Anova8G2=sorted.tail(3)
+       sorted=sorted[:-3]
+       Anova8G1=sorted.tail(3)
        #get into a format we can use
-       A8['y']=sorted[:,1]
+
        
        #get stats on anova 8 level
        anova8Guess=numpy.array([10,0.4,10,10,10,10,10,10,1])
-       fitanova8=minimize(anova8Mod,anova8Guess,method="Nelder-Mead",args=df)
+       fitanova8=minimize(anova8Mod,anova8Guess,method="Nelder-Mead",args=A8f)
        
        #compare anova 8 level and null to get p-value
        teststat=2*(fitNull.fun-fitanova8.fun)
@@ -181,9 +210,12 @@ for s in range (0,len(sigma_list)):
 print (summary)
 
 #turn summary into dataframe 
-pd.summary(columns=['Sigma','Regression Pvals','2-way ANOVA Pvals','4-way ANOVA Pvals','8-way ANOVA Pvals']
-index=['1','2','4','6','8','12','16','24'])
-
+columns=['Regression Pvals','2-way ANOVA Pvals','4-way ANOVA Pvals','8-way ANOVA Pvals']
+sigma=['1','2','4','6','8','12','16','24']
+finalsum=pd.DataFrame(data=summary,
+                  index=sigma,
+                  columns=columns)
+print(finalsum)
 #mean of the p-vals at all sigmas? 
 #what do they tell us? 
 
