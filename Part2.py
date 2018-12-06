@@ -52,10 +52,11 @@ teststat=2*(fitnull.fun-fit.fun)
 df=len(fit.x)-len(fitnull.x) 
 pval=1-stats.chi2.cdf(teststat,df)  
 print (pval)
-
-#sentence about plot do we need a regression line on our plot? 
-#because our p-value is low we can reject the null hypothesis. This tells us 
-#we do care about the effect of sugar on growth
+ 
+#The graph depicting amount of sugar to growth sugests that there is a possitive correlation between the amount of sugar E.coli recieve and how much they grow. 
+#This hypothesis was tested using a regression analysis getting a p-value of 2.6389e-10. 
+#The p-value is very low so we are able to reject the null hypothesis that sugar does't have an effect on growth of E.coli. 
+ 
 
 
 
