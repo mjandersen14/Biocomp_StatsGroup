@@ -101,7 +101,7 @@ for s in range (0,len(sigma_list)):
        y=0.4*x+10
        y=y+numpy.random.randn(N)*sigma_list[s]
        df=pd.DataFrame({'x':x,'y':y})  
-       #d=d+1
+
        
        #get stats on regression 
        RegressionGuess=numpy.array([10,0.4,1])
@@ -125,8 +125,6 @@ for s in range (0,len(sigma_list)):
        sorted=A2f.sort_values(by=['x'])
        Anova2G1=sorted.head(12)
        Anova2G2=sorted.tail(12)
-       #get into a format we can use 
-       #get rid of the x axis variables
        
        #get stats on anova 2 level
        anova2Guess=numpy.array([10,0.4,1])
@@ -141,18 +139,7 @@ for s in range (0,len(sigma_list)):
        a2Pvals.append(pval2)
        
        #split data into 4 groups
-       A4f=A4.join(df)
-       sorted=A4f.sort_values(by=['x'])
-       Anova4G1=sorted.tail(6)
-       sorted=sorted[:-6]
-       Anova4G2=sorted.tail(6)
-       sorted=sorted[:-6]
-       Anova4G3=sorted.tail(6)
-       sorted=sorted[:-6]
-       Anova4G4=sorted.tail(6)
-       sorted=sorted[:-6]
-       
-       #now get in a format we can use  
+       A4f=A4.join(df) 
        
        #get stats on anova 4 level
        anova4Guess=numpy.array([10,0.4,10,10,1])
@@ -168,25 +155,6 @@ for s in range (0,len(sigma_list)):
        
        #add df to dummyframe
        A8f=A8.join(df)
-       #split data into 8 groups 
-       sorted=A8f.sort_values(by=['x'])
-       Anova8G8=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G7=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G6=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G5=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G4=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G3=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G2=sorted.tail(3)
-       sorted=sorted[:-3]
-       Anova8G1=sorted.tail(3)
-       #get into a format we can use
-
        
        #get stats on anova 8 level
        anova8Guess=numpy.array([10,0.4,10,10,10,10,10,10,1])
