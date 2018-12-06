@@ -183,6 +183,10 @@ finalsum=pd.DataFrame(data=summary,
                   columns=columns)
 print(finalsum)
 
+#The relative performance of the experimental designs improves as the number of levels in the ANOVA experiment increases
+#The designs show that a higher number of levels in an ANOVA results in a lower p-value and is indicative of a better performing model that is closer to the regression model
+#Overall, the regression performs better than all of the ANOVA simulations
+#This shows that regression-design experiments are more powerful in detecting a continuous relationship between two variables 
 
 
 
